@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://cae434sf54qjh"]
+
+[ext_resource type="Texture2D" uid="uid://osqhet15mi5l" path="res://icon.svg" id="1_ijg3d"]
+[ext_resource type="PackedScene" uid="uid://bay8evl37k13y" path="res://player.tscn" id="2_sdm8o"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p7qvw"]
+texture = ExtResource("1_ijg3d")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_6lrba"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "walkable"
+custom_data_layer_0/type = 1
+sources/0 = SubResource("TileSetAtlasSource_p7qvw")
+
+[node name="Combat" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(576, 336)
+scale = Vector2(10, 10)
+texture = ExtResource("1_ijg3d")
+
+[node name="Icon2" type="Sprite2D" parent="."]
+position = Vector2(1960, 632)
+scale = Vector2(10, 10)
+texture = ExtResource("1_ijg3d")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_6lrba")
+format = 2
+layer_0/tile_data = PackedInt32Array(-262153, 0, 0, -262152, 0, 0, -262151, 0, 0, -262150, 0, 0, -262149, 0, 0, -262148, 0, 0, -262147, 0, 0, -262146, 0, 0, -262145, 0, 0, -327680, 0, 0, -327679, 0, 0, -327678, 0, 0, -327677, 0, 0, -327676, 0, 0, -327675, 0, 0, -327674, 0, 0, -327673, 0, 0, -327672, 0, 0, -196617, 0, 0, -131081, 0, 0, -65545, 0, 0, -9, 0, 0, 65527, 0, 0, 131063, 0, 0, 196599, 0, 0, 262135, 0, 0, 327671, 0, 0, 327672, 0, 0, 327673, 0, 0, 327674, 0, 0, 327675, 0, 0, 327676, 0, 0, 327677, 0, 0, 327678, 0, 0, 327679, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 65532, 0, 0, 131068, 0, 0, 196604, 0, 0, 1, 0, 0, 65537, 0, 0, 131073, 0, 0, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 65530, 0, 0, 131066, 0, 0, 196602, 0, 0, 65531, 0, 0, 196603, 0, 0, 65533, 0, 0, 2, 0, 0, 65538, 0, 0, 131074, 0, 0, 131075, 0, 0, -131079, 0, 0, -131078, 0, 0, -131077, 0, 0, -131076, 0, 0, -131075, 0, 0, -196607, 0, 0, -196606, 0, 0, -196605, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -262136, 0, 0, -196600, 0, 0, -131064, 0, 0, -65528, 0, 0, 8, 0, 0, 65544, 0, 0, 131080, 0, 0, 196616, 0, 0, 131072, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("2_sdm8o")]
+position = Vector2(64, 64)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(0.3, 0.3)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "빠르다, 그래서 어지럽다.
+Accept your death."

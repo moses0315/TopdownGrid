@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://bay8evl37k13y"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_ou4jy"]
+[ext_resource type="Texture2D" uid="uid://osqhet15mi5l" path="res://icon.svg" id="2_52u8f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57jqd"]
+size = Vector2(128, 128)
+
+[sub_resource type="Animation" id="Animation_iikgs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_jqi52"]
+resource_name = "attack"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon2:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g1iis"]
+_data = {
+"RESET": SubResource("Animation_iikgs"),
+"attack": SubResource("Animation_jqi52")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_prunp"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ou4jy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_57jqd")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="Icon2" type="Sprite2D" parent="AttackArea"]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("2_52u8f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AttackArea"]
+libraries = {
+"": SubResource("AnimationLibrary_g1iis")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("RectangleShape2D_prunp")
+disabled = true
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0, 1)
+texture = ExtResource("2_52u8f")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[connection signal="animation_finished" from="AttackArea/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
